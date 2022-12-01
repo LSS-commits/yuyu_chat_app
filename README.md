@@ -7,9 +7,10 @@ This is the code for a realtime chat application using React and Firebase.
 - Display latest conversations and latest message
 - Send images
 - Registration and authentication
+- Custom password toggle on forms
 
 # Also used
-/
+- CSS Sass
 
 # Proposed improvements
 - Message timestamp
