@@ -3,6 +3,7 @@ import Logo from "../assets/logo.png";
 import AddAvatar from "../assets/addAvatar.png";
 
 const Register = () => {
+  // toggle password
   const [values, setValues] = React.useState({
     password: "",
     showPassword: false

@@ -8,24 +8,39 @@ $white: #FFFFFF;
 $darkTurquoise: #05D3E3;
 $powderBlue: #A5D8DC;
 $darkGrey: #3D3D3D;
+// effects
+$boxShadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+
+// mixins
+@mixin elementLayout(){
+    display: flex;
+    align-items: center
+}
+
+@mixin pageLayout(){
+    background-color: $maximumBlueGreenDark;
+    height: 100vh;
+    @include elementLayout();
+    justify-content: center
+}
+
 
 html, body{
     color: $darkGrey
 }
+
+// forms
 .formContainer {
-    background-color: $maximumBlueGreenDark;
-    height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    @include pageLayout();
     .formWrapper {
         background-color: $white;
+        box-shadow: $boxShadow;
         padding: 20px 60px;
         border-radius: 10px;
-        display: flex;
+        @include elementLayout();
         flex-direction: column;
         gap: 10px;
-        align-items: center;
+        // TODO: define width and height
         .logo {
            height: 100px; 
            border-radius: 10px
@@ -51,8 +66,7 @@ html, body{
                 display: none
             }
             label{
-                display: flex;
-                align-items: center;
+                @include elementLayout();
                 gap: 10px;
                 color: $maximumBlueGreenDark;
                 font-size: 12px;
@@ -116,5 +130,17 @@ html, body{
             font-size: 12px;
             margin-top: 10px
         }
+    }
+}
+
+// home page
+.home {
+    @include pageLayout();
+
+    .container {
+       border: 1px solid $white;
+       border-radius: 10px; 
+       width: 65%;
+       height: 80%;
     }
 }
