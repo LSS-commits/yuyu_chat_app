@@ -12,12 +12,12 @@ $darkGrey: #3D3D3D;
 $boxShadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
 
 // mixins
-@mixin elementLayout(){
+@mixin elementLayout() {
     display: flex;
     align-items: center
 }
 
-@mixin pageLayout(){
+@mixin pageLayout() {
     background-color: $maximumBlueGreenDark;
     height: 100vh;
     @include elementLayout();
@@ -25,13 +25,15 @@ $boxShadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
 }
 
 
-html, body{
+html,
+body {
     color: $darkGrey
 }
 
 // forms
 .formContainer {
     @include pageLayout();
+
     .formWrapper {
         background-color: $white;
         box-shadow: $boxShadow;
@@ -40,46 +42,56 @@ html, body{
         @include elementLayout();
         flex-direction: column;
         gap: 10px;
+
         // TODO: define width and height
         .logo {
-           height: 100px; 
-           border-radius: 10px
+            height: 100px;
+            border-radius: 10px
         }
+
         .title {
             font-size: 24px;
             font-weight: 700
         }
+
         form {
             display: flex;
             flex-direction: column;
             gap: 15px;
-            input{
+
+            input {
                 padding: 15px;
                 border: none;
                 width: 250px;
                 border-bottom: 1px solid $powderBlue;
+
                 &::placeholder {
                     opacity: .4
                 }
             }
+
             .avatarInput {
                 display: none
             }
-            label{
+
+            label {
                 @include elementLayout();
                 gap: 10px;
                 color: $maximumBlueGreenDark;
                 font-size: 12px;
                 cursor: pointer;
+
                 img {
                     width: 32px
                 }
             }
+
             .checkPassword {
                 display: flex;
                 gap: 5px;
                 margin-bottom: 10px;
-                input[type="checkbox"]{
+
+                input[type="checkbox"] {
                     width: inherit;
                     padding: 0;
                     -webkit-appearance: none;
@@ -93,11 +105,13 @@ html, body{
                     border-radius: 3px;
                     cursor: pointer
                 }
-                input[type="checkbox"]:checked{
+
+                input[type="checkbox"]:checked {
                     background: $maximumBlueGreenDark;
                 }
+
                 // check icon
-                input[type="checkbox"]:after{
+                input[type="checkbox"]:after {
                     content: ' ';
                     position: relative;
                     left: 35%;
@@ -109,13 +123,16 @@ html, body{
                     transform: rotate(50deg);
                     display: none
                 }
-                input[type="checkbox"]:checked:after{
+
+                input[type="checkbox"]:checked:after {
                     display: block
                 }
-                label{
+
+                label {
                     color: $darkGrey
                 }
             }
+
             button {
                 background-color: $maximumBlueGreenDark;
                 color: $white;
@@ -126,6 +143,7 @@ html, body{
                 cursor: pointer
             }
         }
+
         p {
             font-size: 12px;
             margin-top: 10px
@@ -138,9 +156,23 @@ html, body{
     @include pageLayout();
 
     .container {
-       border: 1px solid $white;
-       border-radius: 10px; 
-       width: 65%;
-       height: 80%;
+        border: 1px solid $white;
+        border-radius: 10px;
+        width: 65%;
+        height: 80%;
+        display: flex;
+        // prevent sidebar's bg from overflowing border (radius)
+        overflow: hidden;
+
+        // chatbox = twice as big as sidebar
+        .sidebar {
+            flex: 1;
+            background-color: powderblue;
+            box-shadow: $boxShadow;
+        }
+
+        .chatbox {
+            flex: 2;
+        }
     }
 }
