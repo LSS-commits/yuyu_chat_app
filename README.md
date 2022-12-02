@@ -18,6 +18,7 @@ This is the code for a realtime chat application using React and Firebase.
 
 # Resources
 Source code by [Lama Dev](https://github.com/safak/youtube2022/tree/react-chat)
+[Tutorial](https://www.youtube.com/watch?v=k4mjF4sPITE)
 
 # Visualization
 The app will be available online.
