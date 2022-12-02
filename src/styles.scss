@@ -7,9 +7,11 @@ $babyPink: #F0C0BF;
 $white: #FFFFFF;
 $darkTurquoise: #05D3E3;
 $powderBlue: #A5D8DC;
+$powderBlueDark: #52a3a8;
 $darkGrey: #3D3D3D;
 // effects
 $boxShadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+$boxShadowLight: rgba(0, 0, 0, 0.16) 0px 1px 4px;
 
 // mixins
 @mixin elementLayout() {
@@ -22,6 +24,17 @@ $boxShadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
     height: 100vh;
     @include elementLayout();
     justify-content: center
+}
+
+@mixin btn($bgColor: $maximumBlueGreenDark) {
+    background-color: $bgColor;
+    color: $white;
+    padding: 10px;
+    font-weight: 700;
+    border: none;
+    border-radius: 10px;
+    box-shadow: $boxShadowLight;
+    cursor: pointer
 }
 
 
@@ -42,8 +55,8 @@ body {
         @include elementLayout();
         flex-direction: column;
         gap: 10px;
+        // TODO: define width and height of wrapper
 
-        // TODO: define width and height
         .logo {
             height: 100px;
             border-radius: 10px
@@ -107,7 +120,7 @@ body {
                 }
 
                 input[type="checkbox"]:checked {
-                    background: $maximumBlueGreenDark;
+                    background: $maximumBlueGreenDark
                 }
 
                 // check icon
@@ -134,13 +147,7 @@ body {
             }
 
             button {
-                background-color: $maximumBlueGreenDark;
-                color: $white;
-                padding: 10px;
-                font-weight: 700;
-                border: none;
-                border-radius: 10px;
-                cursor: pointer
+                @include btn()
             }
         }
 
@@ -157,6 +164,7 @@ body {
 
     .container {
         border: 1px solid $white;
+        box-shadow: $boxShadow;
         border-radius: 10px;
         width: 65%;
         height: 80%;
@@ -164,15 +172,52 @@ body {
         // prevent sidebar's bg from overflowing border (radius)
         overflow: hidden;
 
+        // TODO: change colors for text and logo
+        // side bar = dark, navbar = darker
+        // chatbox = bright, chatbox navbar = darker
+
         // chatbox = twice as big as sidebar
         .sidebar {
             flex: 1;
             background-color: powderblue;
             box-shadow: $boxShadow;
+
+            .navbar {
+                @include elementLayout();
+                background-color: $powderBlueDark;
+                height: 50px;
+                padding: 10px;
+                justify-content: space-between;
+                color: $white;
+
+                .logo {
+                    width: 30px;
+                    border-radius: 10px
+                }
+                .user {
+                    display: flex;
+                    gap: 10px;
+
+                    img {
+                        background-color: $white;
+                        height: 24px;
+                        width: 24px;
+                        border-radius: 50%;
+                        // to crop avatar img properly
+                        object-fit: cover
+                    }
+
+                    button {
+                        @include btn();
+                        // TODO: change content and size
+                        // font-size: 10px;
+                    }
+                }
+            }
         }
 
         .chatbox {
-            flex: 2;
+            flex: 2
         }
     }
 }

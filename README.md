@@ -23,5 +23,7 @@ Added
 Source code by [Lama Dev](https://github.com/safak/youtube2022/tree/react-chat)
 [Tutorial](https://www.youtube.com/watch?v=k4mjF4sPITE)
 
+Licence-free [user avatars](https://www.pexels.com/fr-fr/)
+
 # Visualization
 The app will be available online.
