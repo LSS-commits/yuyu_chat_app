@@ -1,14 +1,50 @@
 // GLOBAL STYLESHEET //
 
-// colors
-$maximumBlueGreen: #00C2CB;
-$maximumBlueGreenDark: #13a5ad;
-$babyPink: #F0C0BF;
-$white: #FFFFFF;
-$darkTurquoise: #05D3E3;
-$powderBlue: #A5D8DC;
+// $maximumBlueGreen: #00C2CB;
 $powderBlueDark: #52a3a8;
+$darkTurquoise: #05D3E3;
+
+// colors
+// WHITES
+$white: #FFFFFF;
+$whiteSmoke: #F5F5F5;
+$pearlWhite: #FBFCF8;
+$powderWhite: #FBFCFA;
+$cottonWhite: #FBFBF9;
+//BLACKS
 $darkGrey: #3D3D3D;
+$lightBlack: #262626;
+
+// outer app
+$viridianGreen: #13A5AD;
+
+// inner app
+// SIDEBAR + chatbox navbar = powder blue shades
+// chatbox navbar = powder blue #A5D8DC
+// navbar = dark cyan #398D93
+// navbar button = powder blue #A5D8DC
+// conversations bg (text white) = middle blue #7BC6CC
+// searchbar = cadet blue #45A9B0
+$darkCyan: #398D93;
+// medium
+$cadetBlue: #45A9B0;
+// bright 
+$middleBlue: #7BC6CC;
+// brightest
+$powderBlue: #A5D8DC;
+
+// CHATBOX (wO/ navbar) = pink shades
+// button + message sent = babypink #F0C0BF
+// message received = white #FFFFFF
+// message background = misty rose #F7DEDE
+// PINKS
+// darkest
+$babyPink: #F0C0BF;
+// brightest
+$mistyRose: #F7DEDE;
+
+
+
 // effects
 $boxShadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
 $boxShadowLight: rgba(0, 0, 0, 0.16) 0px 1px 4px;
@@ -20,13 +56,13 @@ $boxShadowLight: rgba(0, 0, 0, 0.16) 0px 1px 4px;
 }
 
 @mixin pageLayout() {
-    background-color: $maximumBlueGreenDark;
+    background-color: $viridianGreen;
     height: 100vh;
     @include elementLayout();
     justify-content: center
 }
 
-@mixin btn($bgColor: $maximumBlueGreenDark) {
+@mixin btn($bgColor: $viridianGreen) {
     background-color: $bgColor;
     color: $white;
     padding: 10px;
@@ -35,6 +71,14 @@ $boxShadowLight: rgba(0, 0, 0, 0.16) 0px 1px 4px;
     border-radius: 10px;
     box-shadow: $boxShadowLight;
     cursor: pointer
+}
+
+@mixin img($h: 50px, $w: 50px) {
+    height: $h;
+    width: $w;
+    border-radius: 50%;
+    // to crop avatar img properly
+    object-fit: cover
 }
 
 
@@ -90,7 +134,7 @@ body {
             label {
                 @include elementLayout();
                 gap: 10px;
-                color: $maximumBlueGreenDark;
+                color: $viridianGreen;
                 font-size: 12px;
                 cursor: pointer;
 
@@ -114,13 +158,13 @@ body {
                     height: 16px;
                     width: 16px;
                     outline: 0;
-                    border: 1px solid $maximumBlueGreenDark;
+                    border: 1px solid $viridianGreen;
                     border-radius: 3px;
                     cursor: pointer
                 }
 
                 input[type="checkbox"]:checked {
-                    background: $maximumBlueGreenDark
+                    background: $viridianGreen
                 }
 
                 // check icon
@@ -172,19 +216,15 @@ body {
         // prevent sidebar's bg from overflowing border (radius)
         overflow: hidden;
 
-        // TODO: change colors for text and logo
-        // side bar = dark, navbar = darker
-        // chatbox = bright, chatbox navbar = darker
-
         // chatbox = twice as big as sidebar
         .sidebar {
             flex: 1;
-            background-color: powderblue;
+            background-color: $middleBlue;
             box-shadow: $boxShadow;
 
             .navbar {
                 @include elementLayout();
-                background-color: $powderBlueDark;
+                background-color: $darkCyan;
                 height: 50px;
                 padding: 10px;
                 justify-content: space-between;
@@ -199,25 +239,43 @@ body {
                     gap: 10px;
 
                     img {
-                        background-color: $white;
-                        height: 24px;
-                        width: 24px;
-                        border-radius: 50%;
-                        // to crop avatar img properly
-                        object-fit: cover
+                        @include img(24px, 24px);
+                        background-color: $darkGrey
                     }
 
                     button {
-                        @include btn();
+                        @include btn($powderBlue);
                         // TODO: change content and size
-                        // font-size: 10px;
+                        font-size: 10px;
+                    }
+                }
+            }
+            .searchbar {
+                background-color: $cadetBlue;
+                border-bottom: 1px solid $darkGrey;
+
+                .searchForm {
+                    padding: 10px;
+                    input {
+                        background-color: rgba(0, 0, 0, 0);
+                        border: none;
+                        color: $white;
+                        outline: 0;
+                    }
+                }
+
+                .userChat {
+                    img {
+                        @include img();
+                        background-color: $darkGrey
                     }
                 }
             }
         }
 
         .chatbox {
-            flex: 2
+            flex: 2;
+            background-color: $powderBlue
         }
     }
 }
