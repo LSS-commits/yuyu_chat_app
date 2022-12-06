@@ -32,6 +32,25 @@ $boxShadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
 $boxShadowLight: rgba(0, 0, 0, 0.16) 0px 1px 4px;
 
 // mixins
+
+// responsive styles
+@mixin mobile{
+    @media screen and (max-width: 480px){
+        @content;
+    }
+}
+@mixin tablet{
+    @media screen and (max-width: 768px){
+        @content;
+    }
+}
+@mixin laptop{
+    @media screen and (max-width: 1200px){
+        @content;
+    }
+}
+// end responsive styles
+
 @mixin elementLayout() {
     display: flex;
     align-items: center
@@ -52,7 +71,14 @@ $boxShadowLight: rgba(0, 0, 0, 0.16) 0px 1px 4px;
     border: none;
     border-radius: 10px;
     box-shadow: $boxShadowLight;
-    cursor: pointer
+    cursor: pointer;
+}
+
+@mixin hover(){
+    transition: .2s all ease-in-out;
+    &:hover {
+        opacity: 0.7;
+    }
 }
 
 @mixin img($h: 50px, $w: 50px) {
@@ -115,7 +141,7 @@ body {
                 }
             }
 
-            // outline style on click (change "blue border" color)
+            // change "blue border" color
             input:focus {
                 outline: 1px solid $powderBlue;
                 border-radius: 3px
@@ -130,6 +156,7 @@ body {
                 gap: 10px;
                 color: $viridianGreen;
                 font-size: 12px;
+                @include hover();
                 cursor: pointer;
 
                 img {
@@ -184,8 +211,10 @@ body {
                 }
             }
 
+            // log in btn
             button {
-                @include btn()
+                @include btn();
+                @include hover()
             }
         }
 
@@ -208,12 +237,17 @@ body {
         display: flex;
         // prevent sidebar's bg from overflowing border (radius)
         overflow: hidden;
+        @include tablet {
+            width: 90%
+        }
 
         // chatbox = twice as big as sidebar
         .sidebar {
             flex: 1;
             background-color: $middleBlue;
             box-shadow: $boxShadow;
+            // to change position of log out btn on smaller screens
+            position: relative;
 
             .navbar {
                 @include elementLayout();
@@ -230,15 +264,34 @@ body {
                 .user {
                     @include elementLayout();
                     gap: 10px;
-
+                    
+                    span, img {
+                        @include tablet {
+                            display: none
+                        }
+                    }
+                    span {
+                        font-size: 12px
+                    }
                     img {
                         @include img(24px, 24px);
-                        background-color: $darkGrey
+                        background-color: $darkGrey;
                     }
 
+                    // log out btn
                     button {
-                        @include btn($powderBlue);
-                        font-size: 10px
+                        @include btn($powderBlue, $darkGrey);
+                        font-size: 10px;
+                        @include hover();
+
+                        // put logout btn at the bottom of the box on smaller screens
+                        @include tablet {
+                            position: absolute;
+                            bottom: 10px;
+                            left: 10px;
+                            background-color: $babyPink;
+                            color: $darkGrey;
+                        }
                     }
                 }
             }
@@ -269,6 +322,7 @@ body {
                 gap: 10px;
                 color: $whiteSmoke;
                 cursor: pointer;
+                transition: .2s all ease-in-out;
 
                 &:hover {
                     background-color: $darkCyan
@@ -311,6 +365,7 @@ body {
                         height: 24px;
                         // invert icon color (bright to dark) depending on bg color
                         filter: invert(70%);
+                        @include hover();
                         cursor: pointer
                     }
                 }
@@ -332,7 +387,7 @@ body {
                     margin-bottom: 20px;
 
                     .messageInfo {
-                        display: flex;
+                        @include elementLayout();
                         flex-direction: column;
 
                         img {
@@ -341,7 +396,10 @@ body {
 
                         span {
                             opacity: .5;
-                            font-weight: 300
+                            font-size: 12px;
+                            font-weight: 300;
+                            // align msg timestamp with user avatar when wrapped
+                            text-align: center
                         }
                     }
 
@@ -422,11 +480,14 @@ body {
 
                     img {
                         height: 24px;
+                        @include hover();
                         cursor: pointer
                     }
 
+                    // send msg btn
                     button {
-                        @include btn($babyPink, $darkGrey)
+                        @include btn($babyPink, $darkGrey);
+                        @include hover()
                     }
                 }
             }
