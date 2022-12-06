@@ -44,9 +44,9 @@ $boxShadowLight: rgba(0, 0, 0, 0.16) 0px 1px 4px;
     justify-content: center
 }
 
-@mixin btn($bgColor: $viridianGreen) {
+@mixin btn($bgColor: $viridianGreen, $textColor: $white) {
     background-color: $bgColor;
-    color: $white;
+    color: $textColor;
     padding: 10px;
     font-weight: 700;
     border: none;
@@ -72,7 +72,7 @@ html,
 body {
     color: $darkGrey;
     // to set arrow cursor by default (instead of text cursor on html elements)
-    cursor: default;
+    cursor: default
 }
 
 // forms
@@ -263,7 +263,6 @@ body {
                     }
                 }
             }
-
             .userChat {
                 padding: 10px;
                 @include elementLayout();
@@ -330,6 +329,7 @@ body {
                 .message {
                     display: flex;
                     gap: 20px;
+                    margin-bottom: 20px;
 
                     .messageInfo {
                         display: flex;
@@ -341,12 +341,39 @@ body {
 
                         span {
                             opacity: .5;
-                            font-weight: 300;
+                            font-weight: 300
                         }
                     }
 
                     .messageContent {
-                        width: 50%;
+                        max-width: 80%;
+                        display: flex;
+                        flex-direction: column;
+                        gap: 10px;
+
+                        p {
+                            padding: 10px 20px;
+                            background-color: $white;
+                            // to give msg shape
+                            border-radius: 0px 10px 10px 10px;
+                            max-width: max-content
+                        }
+                        img{
+                            width: 50%
+                        }
+                    }
+
+                    // if the msg is from the current user, on the right
+                    &.owner{
+                        flex-direction: row-reverse;
+
+                        .messageContent {
+                            align-items: flex-end;
+                            p {
+                                background-color: $babyPink;
+                                border-radius: 10px 0px 10px 10px
+                            }
+                        }
                     }
                 }
             }
@@ -358,20 +385,20 @@ body {
             }
 
             .messages::-webkit-scrollbar-track {
-                background-color: $babyPink;
+                background-color: $babyPink
             }
 
             .messages::-webkit-scrollbar-thumb {
                 height: 30px;
-                background-color: $powderBlue;
+                background-color: $powderBlue
             }
 
             .messageInput {
                 @include bar();
                 background-color: $white;
-                box-shadow: $boxShadowLight;
                 @include elementLayout();
                 justify-content: space-between;
+                box-shadow: $boxShadowLight;
 
                 input {
                     width: 100%;
@@ -381,7 +408,7 @@ body {
                     font-size: 18px;
 
                     &::placeholder {
-                        opacity: .3;
+                        opacity: .3
                     }
                 }
 
@@ -399,7 +426,7 @@ body {
                     }
 
                     button {
-                        @include btn($babyPink)
+                        @include btn($babyPink, $darkGrey)
                     }
                 }
             }
