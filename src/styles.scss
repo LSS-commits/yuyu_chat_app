@@ -1,30 +1,18 @@
 // GLOBAL STYLESHEET //
-
-// $maximumBlueGreen: #00C2CB;
-$powderBlueDark: #52a3a8;
-$darkTurquoise: #05D3E3;
+// font = noto sans or open sans > index.html
 
 // colors
-// WHITES
+$transparent: rgba(0, 0, 0, 0);
 $white: #FFFFFF;
 $whiteSmoke: #F5F5F5;
-$pearlWhite: #FBFCF8;
-$powderWhite: #FBFCFA;
-$cottonWhite: #FBFBF9;
-//BLACKS
+$lightGrey: #E6E6E6;
 $darkGrey: #3D3D3D;
 $lightBlack: #262626;
-
 // outer app
 $viridianGreen: #13A5AD;
-
 // inner app
-// SIDEBAR + chatbox navbar = powder blue shades
-// chatbox navbar = powder blue #A5D8DC
-// navbar = dark cyan #398D93
-// navbar button = powder blue #A5D8DC
-// conversations bg (text white) = middle blue #7BC6CC
-// searchbar = cadet blue #45A9B0
+// blue green
+// darkest
 $darkCyan: #398D93;
 // medium
 $cadetBlue: #45A9B0;
@@ -32,18 +20,12 @@ $cadetBlue: #45A9B0;
 $middleBlue: #7BC6CC;
 // brightest
 $powderBlue: #A5D8DC;
-
-// CHATBOX (wO/ navbar) = pink shades
-// button + message sent = babypink #F0C0BF
-// message received = white #FFFFFF
-// message background = misty rose #F7DEDE
-// PINKS
+// pink
 // darkest
 $babyPink: #F0C0BF;
 // brightest
 $mistyRose: #F7DEDE;
-
-
+$lavenderBlush: #FBEFEE;
 
 // effects
 $boxShadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
@@ -81,10 +63,16 @@ $boxShadowLight: rgba(0, 0, 0, 0.16) 0px 1px 4px;
     object-fit: cover
 }
 
+@mixin bar() {
+    height: 50px;
+    padding: 10px
+}
 
 html,
 body {
-    color: $darkGrey
+    color: $darkGrey;
+    // to set arrow cursor by default (instead of text cursor on html elements)
+    cursor: default;
 }
 
 // forms
@@ -99,8 +87,8 @@ body {
         @include elementLayout();
         flex-direction: column;
         gap: 10px;
-        // TODO: define width and height of wrapper
 
+        // TODO: define width and height of wrapper
         .logo {
             height: 100px;
             border-radius: 10px
@@ -125,6 +113,12 @@ body {
                 &::placeholder {
                     opacity: .4
                 }
+            }
+
+            // outline style on click (change "blue border" color)
+            input:focus {
+                outline: 1px solid $powderBlue;
+                border-radius: 3px
             }
 
             .avatarInput {
@@ -157,7 +151,7 @@ body {
                     background: $white;
                     height: 16px;
                     width: 16px;
-                    outline: 0;
+                    outline: none;
                     border: 1px solid $viridianGreen;
                     border-radius: 3px;
                     cursor: pointer
@@ -167,7 +161,7 @@ body {
                     background: $viridianGreen
                 }
 
-                // check icon
+                // checkbox icon
                 input[type="checkbox"]:after {
                     content: ' ';
                     position: relative;
@@ -207,7 +201,6 @@ body {
     @include pageLayout();
 
     .container {
-        border: 1px solid $white;
         box-shadow: $boxShadow;
         border-radius: 10px;
         width: 65%;
@@ -225,17 +218,17 @@ body {
             .navbar {
                 @include elementLayout();
                 background-color: $darkCyan;
-                height: 50px;
-                padding: 10px;
+                @include bar();
                 justify-content: space-between;
                 color: $white;
 
                 .logo {
-                    width: 30px;
-                    border-radius: 10px
+                    font-weight: 600;
+                    color: $white
                 }
+
                 .user {
-                    display: flex;
+                    @include elementLayout();
                     gap: 10px;
 
                     img {
@@ -245,29 +238,57 @@ body {
 
                     button {
                         @include btn($powderBlue);
-                        // TODO: change content and size
-                        font-size: 10px;
+                        font-size: 10px
                     }
                 }
             }
+
             .searchbar {
                 background-color: $cadetBlue;
-                border-bottom: 1px solid $darkGrey;
+                border-bottom: 1px solid $white;
+                box-shadow: $boxShadowLight;
 
                 .searchForm {
                     padding: 10px;
+
                     input {
-                        background-color: rgba(0, 0, 0, 0);
+                        background-color: $transparent;
                         border: none;
                         color: $white;
-                        outline: 0;
+                        outline: none;
+
+                        &::placeholder {
+                            opacity: .7
+                        }
                     }
                 }
+            }
 
-                .userChat {
-                    img {
-                        @include img();
-                        background-color: $darkGrey
+            .userChat {
+                padding: 10px;
+                @include elementLayout();
+                gap: 10px;
+                color: $whiteSmoke;
+                cursor: pointer;
+
+                &:hover {
+                    background-color: $darkCyan
+                }
+
+                img {
+                    @include img();
+                    background-color: $darkGrey
+                }
+
+                .userChatInfo {
+                    span {
+                        font-size: 18px;
+                        font-weight: 600
+                    }
+
+                    p {
+                        font-size: 14px;
+                        color: $lightGrey
                     }
                 }
             }
@@ -275,7 +296,113 @@ body {
 
         .chatbox {
             flex: 2;
-            background-color: $powderBlue
+
+            .chatInfo {
+                @include bar();
+                background-color: $powderBlue;
+                @include elementLayout();
+                justify-content: space-between;
+                color: $darkGrey;
+
+                .chatIcons {
+                    display: flex;
+                    gap: 10px;
+
+                    img {
+                        height: 24px;
+                        // invert icon color (bright to dark) depending on bg color
+                        filter: invert(70%);
+                        cursor: pointer
+                    }
+                }
+            }
+
+            .messages {
+                background-color: $lavenderBlush;
+                padding: 10px;
+                // to calculate height of messages box = 70px for chat info + 70px for message input + 20px padding inside messages box = 160px
+                height: calc(100% - 160px);
+                // if messages don't fit inside messages box, scroll 
+                overflow-y: scroll;
+                scrollbar-color: $powderBlue $babyPink;
+                scrollbar-width: thin;
+
+                .message {
+                    display: flex;
+                    gap: 20px;
+
+                    .messageInfo {
+                        display: flex;
+                        flex-direction: column;
+
+                        img {
+                            @include img(40px, 40px)
+                        }
+
+                        span {
+                            opacity: .5;
+                            font-weight: 300;
+                        }
+                    }
+
+                    .messageContent {
+                        width: 50%;
+                    }
+                }
+            }
+
+            // scrollbar for other browsers
+            .messages::-webkit-scrollbar {
+                height: 10px;
+                width: 10px
+            }
+
+            .messages::-webkit-scrollbar-track {
+                background-color: $babyPink;
+            }
+
+            .messages::-webkit-scrollbar-thumb {
+                height: 30px;
+                background-color: $powderBlue;
+            }
+
+            .messageInput {
+                @include bar();
+                background-color: $white;
+                box-shadow: $boxShadowLight;
+                @include elementLayout();
+                justify-content: space-between;
+
+                input {
+                    width: 100%;
+                    border: none;
+                    outline: none;
+                    color: $darkGrey;
+                    font-size: 18px;
+
+                    &::placeholder {
+                        opacity: .3;
+                    }
+                }
+
+                .sendMessage {
+                    @include elementLayout();
+                    gap: 10px;
+
+                    .messageFile {
+                        display: none
+                    }
+
+                    img {
+                        height: 24px;
+                        cursor: pointer
+                    }
+
+                    button {
+                        @include btn($babyPink)
+                    }
+                }
+            }
         }
     }
 }
