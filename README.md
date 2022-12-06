@@ -1,6 +1,5 @@
 # Yuyu Chat App
 This is the code for a realtime chat application using React and Firebase. 
-*유유 (or yuyu) is the Korean word for ...
 
 # Overview
 - User search bar to start a new conversation
