@@ -1,6 +1,6 @@
 import React from 'react';
 import Logo from "../assets/logo.png";
-import AddAvatar from "../assets/addAvatar.png";
+import AddAvatar from "../assets/addavatar.png";
 
 const Register = () => {
   // toggle password
