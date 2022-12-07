@@ -12,11 +12,11 @@ Added
 - Custom password toggle on forms
 
 # Also used
-- CSS Sass
+- Sass CSS
 
 # Proposed improvements
 - Message timestamp
-- React Native Web
+- Use React Native Web (hybrid app)
 
 # Resources
 Source code by [Lama Dev](https://github.com/safak/youtube2022/tree/react-chat)
