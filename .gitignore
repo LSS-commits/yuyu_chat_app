@@ -23,4 +23,6 @@ yarn-debug.log*
 yarn-error.log*
 
 # personal
+.env
 userData.txt
+firebase-config.js

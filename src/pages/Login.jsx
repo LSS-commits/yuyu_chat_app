@@ -21,8 +21,8 @@ const Login = () => {
                 <img className="logo" src={Logo} alt="yuyu app logo" />
                 <span className="title">Welcome back !</span>
                 <form>
-                    <input type="email" placeholder="Email" />
-                    <input type={values.showPassword ? "text" : "password"} onChange={togglePassword("password")} value={values.password} placeholder="Password" />
+                    <input required type="email" placeholder="Email" />
+                    <input required type={values.showPassword ? "text" : "password"} onChange={togglePassword("password")} value={values.password} placeholder="Password" />
                     <div className='checkPassword' onClick={checkboxClick}>
                         <input type="checkbox" id="passwordToggle" />
                         <label htmlFor="passwordToggle">Show/Hide Password</label>
