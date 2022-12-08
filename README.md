@@ -10,6 +10,7 @@ This is the code for a realtime chat application using React and Firebase.
 Added
 - Improved UI
 - Custom password toggle on forms
+- Form validation
 
 # Also used
 - Sass CSS

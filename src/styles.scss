@@ -8,6 +8,7 @@ $whiteSmoke: #F5F5F5;
 $lightGrey: #E6E6E6;
 $darkGrey: #3D3D3D;
 $lightBlack: #262626;
+$errorCol: #FF4444;
 // outer app
 $viridianGreen: #13A5AD;
 // inner app
@@ -211,10 +212,18 @@ body {
                 }
             }
 
-            // log in btn
+            // sign in/up btn
             button {
                 @include btn();
                 @include hover()
+            }
+            .errorMessage {
+                text-align: center;
+                color: $errorCol;
+                font-weight: 700;
+                &::first-letter{
+                    text-transform: capitalize;
+                }
             }
         }
 

@@ -8,6 +8,7 @@ const Login = () => {
         showPassword: false
     });
 
+    // TODO: add error message
     const checkboxClick = () => {
         setValues({ ...values, showPassword: !values.showPassword });
     };
