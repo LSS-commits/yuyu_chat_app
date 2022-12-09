@@ -5,7 +5,9 @@ This is the code for a realtime chat application using React and Firebase.
 - User search bar to start a new conversation
 - Display latest conversations and latest message
 - Send images
+
 - Registration and authentication
+- Users database
 
 Added
 - Improved UI
