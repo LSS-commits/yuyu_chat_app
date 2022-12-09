@@ -5,7 +5,7 @@ import { createUserWithEmailAndPassword } from "firebase/auth";
 import { auth, storage } from "../firebase-config";
 import { useState } from 'react';
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
-import { validateFileUpload } from "../shared/Functions";
+import { validateFileUpload, isValidFormat } from "../shared/Functions";
 
 const Register = () => {
   // toggle password
@@ -23,34 +23,37 @@ const Register = () => {
   };
 
 
-  // TODO: handle file format + display file name
-  // checkFileType(file);
-  // if (isTypeOk === false) {
-  //   setFileErr({ ...fileErr, state: true, message: "Avatar should be jpeg or png" });
-  // }else{
-  //   setFileErr({ ...fileErr, state: false, message: "upload ok" });
-  // }
-  let testFile = false;
-  const checkFile = (e) => {
-    const file = e.target.files[0];
-    console.log(file);
-    validateFileUpload(file, testFile);
+  // check avatar and display preview
+  const [imgData, setImgData] = useState(null);
 
-    return testFile;
-  };
-
-
-  // delete btn to clear field
-
-  // handle registration
-  // form error
-  const [formErr, setFormErr] = useState({
+  // file msg
+  const [fileMsg, setfileMsg] = useState({
     message: "",
     state: false
   });
 
-  // file error
-  const [fileErr, setFileErr] = useState({
+  const checkFile = (e) => {
+    const avatar = e.target.files[0];
+    validateFileUpload(avatar);
+    // console.log(isValidFormat);
+
+    if (isValidFormat === true) {
+      const reader = new FileReader();
+      reader.addEventListener("load", () => {
+        setImgData(reader.result);
+      });
+      reader.readAsDataURL(avatar);
+      setfileMsg({ ...fileMsg, state: false, message: "Here's your avatar!" });
+    }else{
+      // clear Filelist to prevent upload of invalid file
+      setImgData("");
+      setfileMsg({ ...fileMsg, state: true, message: "Avatar should be jpeg or png"});
+    }
+  };
+
+  // handle registration
+  // form error
+  const [formErr, setFormErr] = useState({
     message: "",
     state: false
   });
@@ -63,11 +66,11 @@ const Register = () => {
     const email = e.target[1].value;
     const password = e.target[2].value;
     // NB e.target[3] = password checkbox
-    // get the first uploaded file
-    const file = e.target[4].files[0];
-    // NB MIME type restricted to image/png, image/jpeg in html
-
+    // get imgData
+    const file = imgData;
+    
     console.log(file.type, file.name);
+
     // const user = userCredential.user;
 
     // error msg if form is incomplete
@@ -75,23 +78,12 @@ const Register = () => {
       setFormErr({ ...formErr, state: !formErr.state, message: "Form is incomplete" });
     } else {
 
-      // TODO: test check file type WHEN ???
-      // checkFileType(file);
-      // if (isTypeOk === false) {
-      //   setFileErr({ ...fileErr, state: true, message: "Avatar should be jpeg or png" });
-      // }else{
-      //   setFileErr({ ...fileErr, state: false, message: "upload ok" });
-      // }
-
       try {
         // firebase function to register user with email and pw
         const response = await createUserWithEmailAndPassword(auth, email, password);
 
-
-
         const fileRef = displayName + "-avatar";
         const storageRef = ref(storage, fileRef);
-
 
         // use firebase uploadBytesResumable to track errors
         const uploadTask = uploadBytesResumable(storageRef, file);
@@ -99,8 +91,8 @@ const Register = () => {
         uploadTask.on(
           (error) => {
             // Handle unsuccessful uploads
-            setFileErr({ ...fileErr, state: true, message: "Error while uploading the file:" + error });
-            console.log("Error while uploading the file:" + error);
+            setfileMsg({ ...fileMsg, state: true, message: "Error while uploading the file:" + error });
+            // console.log("Error while uploading the file:" + error);
           },
           () => {
             // Handle successful uploads on complete
@@ -136,15 +128,17 @@ const Register = () => {
             <input type="checkbox" id="passwordToggle" />
             <label htmlFor="passwordToggle">Show/Hide Password</label>
           </div>
-          <input type="file" className='avatarInput' id="addAvatar" onChange={checkFile} />
-          {/* accept="image/png, image/jpeg" */}
+          <input type="file" className='avatarInput' id="addAvatar" accept="image/png, image/jpeg" onChange={checkFile} />
           <label htmlFor="addAvatar">
             <img src={AddAvatar} alt="add avatar img" />
             <span>Add an avatar</span>
           </label>
-          {/* TODO: show uploaded file + error msg */}
-          {fileErr && <span className='errorMessage'>{fileErr.message}</span>}
+          {/* avatar preview if format is valid*/}
+          {imgData && <img src={imgData} alt="test avatar" className="avatarPreview" />}
+          {/* error if format is invalid */}
+          {fileMsg && <span className='errorMessage'>{fileMsg.message}</span>}
           <button>Sign up</button>
+          {/* form error */}
           {formErr && <span className='errorMessage'>{formErr.message}</span>}
         </form>
         <p>Already have an account? Login</p>

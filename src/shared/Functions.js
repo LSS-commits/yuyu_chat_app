@@ -1,27 +1,27 @@
 // check MIME type for avatar img in registration form
-const supportedType = ['image/png', 'image/jpeg'];
-const validateFileUpload = (file, bool) => {
+const supportedFormat = ['image/png', 'image/jpeg'];
+let isValidFormat = false;
+const validateFileUpload = (file) => {
 
-    if (file.type === ".url") {
-        console.log("url not accepted");
+    // if type is empty
+    if (file.type === "") {
+        isValidFormat  = false;
+        return isValidFormat;
     }
 
     if (file && file.type) {
-        if (0 > supportedType.indexOf(file.type)) {
-            console.log("wrong format", file.type);
-            // return wrong value
-            bool = false;
+        if (0 > supportedFormat.indexOf(file.type)) {
+            isValidFormat  = false;
         } else {
-            console.log("format ok");
-            // return ok value
-            bool = true;
+            isValidFormat  = true;
         }
-        return bool;
+        return isValidFormat ;
     }
 };
 
 
 export {
-    supportedType,
+    supportedFormat,
+    isValidFormat,
     validateFileUpload
 };

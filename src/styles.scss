@@ -86,6 +86,7 @@ $boxShadowLight: rgba(0, 0, 0, 0.16) 0px 1px 4px;
     height: $h;
     width: $w;
     border-radius: 50%;
+    background-color: $darkGrey;
     // to crop avatar img properly
     object-fit: cover
 }
@@ -212,6 +213,10 @@ body {
                 }
             }
 
+            .avatarPreview{
+                @include img(80px, 80px);
+                align-self: center;
+            }
             // sign in/up btn
             button {
                 @include btn();
@@ -220,9 +225,10 @@ body {
             .errorMessage {
                 text-align: center;
                 color: $errorCol;
+                font-size: 14px;
                 font-weight: 700;
                 &::first-letter{
-                    text-transform: capitalize;
+                    text-transform: capitalize
                 }
             }
         }
@@ -283,8 +289,7 @@ body {
                         font-size: 12px
                     }
                     img {
-                        @include img(24px, 24px);
-                        background-color: $darkGrey;
+                        @include img(24px, 24px)
                     }
 
                     // log out btn
