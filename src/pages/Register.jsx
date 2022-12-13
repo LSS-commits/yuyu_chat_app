@@ -3,9 +3,10 @@ import Logo from "../assets/logo.png";
 import AddAvatar from "../assets/addavatar.png";
 import { useState } from 'react';
 import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
-import { auth, storage } from "../firebase-config";
+import { auth, chatDB, storage } from "../firebase-config";
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import { validateFileUpload, isValidFormat } from "../shared/Functions";
+import { doc, setDoc } from "firebase/firestore";
 
 const Register = () => {
   // toggle password
@@ -31,7 +32,7 @@ const Register = () => {
   const checkFile = (e) => {
     const avatar = e.target.files[0];
     validateFileUpload(avatar);
-    // console.log(isValidFormat);
+
     if (isValidFormat === true) {
       const reader = new FileReader();
       reader.addEventListener("load", () => {
@@ -39,10 +40,10 @@ const Register = () => {
       });
       reader.readAsDataURL(avatar);
       setfileMsg({ ...fileMsg, state: false, message: "Here's your avatar!" });
-    }else{
+    } else {
       // clear Filelist to prevent upload of invalid file
       setImgData(null);
-      setfileMsg({ ...fileMsg, state: true, message: "Avatar should be jpeg or png"});
+      setfileMsg({ ...fileMsg, state: true, message: "Avatar should be jpeg or png" });
     }
   };
 
@@ -63,61 +64,98 @@ const Register = () => {
     // NB e.target[3] = password checkbox
     // get imgData 
     const file = imgData ? imgData : false;
-    
-    
-    console.log(file.type, file.name);
+
 
     // const user = userCredential.user;
 
     // error msg if form is incomplete
     if (!displayName || !email || !password || !file) {
       setFormErr({ ...formErr, state: true, message: "Form is incomplete" });
+
+      // remove form error and only show avatar error if only avatar is missing
       if (!file) {
-        setfileMsg({ ...fileMsg, state: true, message: "Please add an avatar image"});
-        // remove form error if only avatar is missing
+        setfileMsg({ ...fileMsg, state: true, message: "Please add an avatar image" });
         setFormErr({ ...formErr, state: false, message: "" });
       };
+
     } else {
 
       try {
-        // firebase function to register user with email and pw
+        // register user with email and pw
         const response = await createUserWithEmailAndPassword(auth, email, password);
-
-        const fileRef = displayName + "-avatar";
-        const storageRef = ref(storage, fileRef);
+        // create unique avatar name
+            // TODO: TEST ERROR
+        // const date = new Date().getTime();
+        // const fileRef = displayName.replace(/\s+/g, "") + "-avatar" + date;
+        const storageRef = ref(storage, `${displayName.replace(/\s+/g, "")}-avatar`);
 
         // use firebase uploadBytesResumable to upload file + track errors
-        const uploadTask = uploadBytesResumable(storageRef, file);
+        // const uploadTask = uploadBytesResumable(storageRef, file);
 
-        uploadTask.on(
-          (error) => {
-            setfileMsg({ ...fileMsg, state: true, message: "Error while uploading the file:" + error });
-            // console.log("Error while uploading the file:" + error);
-          },
-          () => {
-            // success
-            // ex: https://firebasestorage.googleapis.com/...
-            getDownloadURL(uploadTask.snapshot.ref).then( async (downloadURL) => {
-              console.log('File available at', downloadURL);
+        // uploadTask.on(
+        //   (error) => {
+        //     setfileMsg({ ...fileMsg, state: true, message: "Error while uploading the file:" + error });
+        //   },
+        //   () => {
+        //     // success
+        //     // ex: https://firebasestorage.googleapis.com/...
+        //     getDownloadURL(uploadTask.snapshot.ref).then(async (downloadURL) => {
+        //       console.log('File available at', downloadURL);
+        //       // update created user with username and avatar
+        //       await updateProfile(response.user, {
+        //         displayName,
+        //         photoURL: downloadURL
+        //       });
+        //       // don't store passwords since we need to see other users in the app ?
+        //       await setDoc(doc(chatDB, "users", response.user.uid), {
+        //         uid: response.user.uid,
+        //         displayName,
+        //         email,
+        //         photoURL: downloadURL
+        //       });
+        //     });
+        //   }
+        // );
+
+        await uploadBytesResumable(storageRef, file).then(() => {
+          getDownloadURL(storageRef).then(async (downloadURL) => {
+            try {
               // update created user with username and avatar
               await updateProfile(response.user, {
                 displayName,
-                photoURL: downloadURL,
-                
+                photoURL: downloadURL
               });
-            });
-          }
-        );
+
+              // create user in db (without password since we need to see the other users?)
+              await setDoc(doc(chatDB, "users", response.user.uid), {
+                uid: response.user.uid,
+                displayName,
+                email,
+                photoURL: downloadURL
+              });
+
+              // create empty user chats for new user
+              await setDoc(doc(chatDB, "userChats", response.user.uid), {});
+
+              // navigate to logged app
+              // navigate("/");
+            } catch (error) {
+              console.log(error);
+              setfileMsg({ ...fileMsg, state: true, message: "Error while uploading the file:" + error });
+            }
+          })
+        });
 
       } catch (e) {
         // get firebase form error, remove useless characters, style with css
         const errMsg = e.code;
         let formattedMsg = errMsg.replace("auth/", '').replaceAll("-", ' ');
         setFormErr({ ...formErr, state: true, message: formattedMsg });
-      }
-    }
+      } // end user creation with file upload
 
-  };
+    } // end form validation (if)
+
+  }; // end handleSubmit
 
   return (
     <div className='formContainer'>

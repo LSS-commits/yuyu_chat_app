@@ -7,10 +7,11 @@ This is the code for a realtime chat application using React and Firebase.
 - Send images
 
 - Registration and authentication
-- Users database
+- Database
 
 Added
 - Improved UI
+
 Form validation
 - Custom password toggle
 - File restriction and avatar preview on registration
@@ -19,7 +20,7 @@ Form validation
 - Sass CSS
 
 # Proposed improvements
-- Message timestamp
+- Message timestamp (regroup messages under a particular date, yesterday, today, above message group, timestamp under message)
 - Use React Native Web (hybrid app)
 
 # Resources
