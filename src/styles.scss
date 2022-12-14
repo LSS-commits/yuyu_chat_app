@@ -103,6 +103,16 @@ body {
     cursor: default
 }
 
+.errorMessage {
+    text-align: center;
+    color: $errorCol;
+    font-size: 14px;
+    font-weight: 700;
+    &::first-letter{
+        text-transform: capitalize
+    }
+}
+
 // forms
 .formContainer {
     @include pageLayout();
@@ -222,15 +232,7 @@ body {
                 @include btn();
                 @include hover()
             }
-            .errorMessage {
-                text-align: center;
-                color: $errorCol;
-                font-size: 14px;
-                font-weight: 700;
-                &::first-letter{
-                    text-transform: capitalize
-                }
-            }
+            
         }
 
         p {

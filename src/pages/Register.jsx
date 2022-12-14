@@ -7,25 +7,29 @@ import { auth, chatDB, storage } from "../firebase-config";
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import { validateFileUpload, isValidFormat } from "../shared/Functions";
 import { doc, setDoc } from "firebase/firestore";
+import { useNavigate } from 'react-router-dom';
 
 const Register = () => {
+
+  // navigation hook
+  const navigate = useNavigate();
+
   // toggle password
-  const [values, setValues] = useState({
+  const [passwordCheck, setPasswordCheck] = useState({
     password: "",
     showPassword: false
   });
   const checkboxClick = () => {
-    setValues({ ...values, showPassword: !values.showPassword });
+    setPasswordCheck({ ...passwordCheck, showPassword: !passwordCheck.showPassword });
   };
   const togglePassword = (prop) => (event) => {
-    setValues({ ...values, [prop]: event.target.value });
+    setPasswordCheck({ ...passwordCheck, [prop]: event.target.value });
   };
 
 
-  // check avatar and display preview
+  // check avatar format, display preview, display status msg
   const [imgData, setImgData] = useState(null);
-  // file msg
-  const [fileMsg, setfileMsg] = useState({
+  const [fileMsg, setFileMsg] = useState({
     message: "",
     state: false
   });
@@ -39,11 +43,11 @@ const Register = () => {
         setImgData(reader.result);
       });
       reader.readAsDataURL(avatar);
-      setfileMsg({ ...fileMsg, state: false, message: "Here's your avatar!" });
+      setFileMsg({ ...fileMsg, state: false, message: "Here's your avatar!" });
     } else {
       // clear Filelist to prevent upload of invalid file
       setImgData(null);
-      setfileMsg({ ...fileMsg, state: true, message: "Avatar should be jpeg or png" });
+      setFileMsg({ ...fileMsg, state: true, message: "Avatar should be jpeg or png" });
     }
   };
 
@@ -61,12 +65,8 @@ const Register = () => {
     const displayName = e.target[0].value;
     const email = e.target[1].value;
     const password = e.target[2].value;
-    // NB e.target[3] = password checkbox
-    // get imgData 
+    // get imgData (= valid avatar)
     const file = imgData ? imgData : false;
-
-
-    // const user = userCredential.user;
 
     // error msg if form is incomplete
     if (!displayName || !email || !password || !file) {
@@ -74,7 +74,7 @@ const Register = () => {
 
       // remove form error and only show avatar error if only avatar is missing
       if (!file) {
-        setfileMsg({ ...fileMsg, state: true, message: "Please add an avatar image" });
+        setFileMsg({ ...fileMsg, state: true, message: "Please add an avatar image" });
         setFormErr({ ...formErr, state: false, message: "" });
       };
 
@@ -84,39 +84,10 @@ const Register = () => {
         // register user with email and pw
         const response = await createUserWithEmailAndPassword(auth, email, password);
         // create unique avatar name
-            // TODO: TEST ERROR
-        // const date = new Date().getTime();
-        // const fileRef = displayName.replace(/\s+/g, "") + "-avatar" + date;
-        const storageRef = ref(storage, `${displayName.replace(/\s+/g, "")}-avatar`);
+        const date = new Date().getTime();
+        const storageRef = ref(storage, `${displayName.replace(/\s+/g, "")}-avatar-${date}`);
 
         // use firebase uploadBytesResumable to upload file + track errors
-        // const uploadTask = uploadBytesResumable(storageRef, file);
-
-        // uploadTask.on(
-        //   (error) => {
-        //     setfileMsg({ ...fileMsg, state: true, message: "Error while uploading the file:" + error });
-        //   },
-        //   () => {
-        //     // success
-        //     // ex: https://firebasestorage.googleapis.com/...
-        //     getDownloadURL(uploadTask.snapshot.ref).then(async (downloadURL) => {
-        //       console.log('File available at', downloadURL);
-        //       // update created user with username and avatar
-        //       await updateProfile(response.user, {
-        //         displayName,
-        //         photoURL: downloadURL
-        //       });
-        //       // don't store passwords since we need to see other users in the app ?
-        //       await setDoc(doc(chatDB, "users", response.user.uid), {
-        //         uid: response.user.uid,
-        //         displayName,
-        //         email,
-        //         photoURL: downloadURL
-        //       });
-        //     });
-        //   }
-        // );
-
         await uploadBytesResumable(storageRef, file).then(() => {
           getDownloadURL(storageRef).then(async (downloadURL) => {
             try {
@@ -134,20 +105,22 @@ const Register = () => {
                 photoURL: downloadURL
               });
 
-              // create empty user chats for new user
+              // create empty user's chats collection for new user
               await setDoc(doc(chatDB, "userChats", response.user.uid), {});
 
-              // navigate to logged app
-              // navigate("/");
+              // navigate to logged app (home)
+              navigate("/");
+              
             } catch (error) {
               console.log(error);
-              setfileMsg({ ...fileMsg, state: true, message: "Error while uploading the file:" + error });
+              // Firestore error (check rules in FB console and refresh)
+              setFormErr({ ...formErr, state: true, message: "Something went wrong on our side, please try again later"});
             }
           })
         });
 
       } catch (e) {
-        // get firebase form error, remove useless characters, style with css
+        // get firebase form error, remove useless characters
         const errMsg = e.code;
         let formattedMsg = errMsg.replace("auth/", '').replaceAll("-", ' ');
         setFormErr({ ...formErr, state: true, message: formattedMsg });
@@ -155,7 +128,7 @@ const Register = () => {
 
     } // end form validation (if)
 
-  }; // end handleSubmit
+  }; // end handle registration
 
   return (
     <div className='formContainer'>
@@ -165,7 +138,7 @@ const Register = () => {
         <form onSubmit={handleSubmit}>
           <input required type="text" placeholder="Username (visible)" />
           <input required type="email" placeholder="Email" />
-          <input required type={values.showPassword ? "text" : "password"} onChange={togglePassword("password")} value={values.password} placeholder="Password (at least 6 characters)" />
+          <input required type={passwordCheck.showPassword ? "text" : "password"} onChange={togglePassword("password")} value={passwordCheck.password} placeholder="Password (at least 6 characters)" />
           <div className='checkPassword' onClick={checkboxClick}>
             <input type="checkbox" id="passwordToggle" />
             <label htmlFor="passwordToggle">Show/Hide Password</label>
