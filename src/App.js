@@ -10,7 +10,7 @@ function App(){
   // get user from AuthContext
   const {currentUser} = useContext(AuthContext);
   // TODO: test response
-  console.log(currentUser);
+  // console.log(currentUser);
 
   // protected route : if there's no user authenticated, show login/register, else home
 

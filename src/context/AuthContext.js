@@ -18,7 +18,7 @@ export const AuthContextProvider = ({children}) => {
                 // if auth sends a user, set currentUser
                 setCurrentUser(user);
                 // console.log(user);
-                console.log(isAuthSubscribed);
+                // console.log(isAuthSubscribed);
 
             }
         });
@@ -27,7 +27,7 @@ export const AuthContextProvider = ({children}) => {
         return () => {
             // cancel the subscription
             isAuthSubscribed = false;
-            console.log(isAuthSubscribed);
+            // console.log(isAuthSubscribed);
         };
     }, []);
 
