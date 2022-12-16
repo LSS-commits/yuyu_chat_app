@@ -10,14 +10,15 @@ function App(){
   // get user from AuthContext
   const {currentUser} = useContext(AuthContext);
   // TODO: test response
-  // console.log(currentUser);
+  console.log(currentUser);
 
   // protected route : if there's no user authenticated, show login/register, else home
 
   const ProtectedRoute = ({children}) => {
     if (!currentUser) {
-      return <Navigate to="/login"/>
+      return <Navigate to="/login"/>;
     }
+    return children;
   };
 
   // TODO: how to prevent authenticated user from navigating to register and login pages ?
@@ -26,13 +27,11 @@ function App(){
     <BrowserRouter>
       <Routes>
         <Route path="/">
-          {/* logged in */}
-          <Route index 
-          element={
+          <Route index element={
           <ProtectedRoute>
             <Home/>
-          </ProtectedRoute>}/>
-          {/* logged out */}
+          </ProtectedRoute>
+          }/>
           <Route path="login" element={<Login/>}/>
           <Route path="register" element={<Register/>}/>
         </Route>
