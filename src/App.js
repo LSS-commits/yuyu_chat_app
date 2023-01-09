@@ -9,20 +9,22 @@ import "./styles.scss";
 function App(){
   // get user from AuthContext
   const {currentUser} = useContext(AuthContext);
-  // TODO: test response
+  // TODO: remove test response
   console.log(currentUser);
 
-  // protected route : if there's no user authenticated, show login/register, else home
+  // TODO: 404 page or navigate to login or home
 
+  // protected route : if there's no user authenticated, navigate to login
   const ProtectedRoute = ({children}) => {
     if (!currentUser) {
       return <Navigate to="/login"/>;
     }
-    return children;
+    // return children;
   };
 
-  // TODO: how to prevent authenticated user from navigating to register and login pages ?
 
+  // TODO: how to prevent authenticated user from navigating to register and login pages ?
+  
   return (
     <BrowserRouter>
       <Routes>
