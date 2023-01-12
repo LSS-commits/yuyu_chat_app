@@ -1,6 +1,9 @@
 import React from 'react';
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
+import { auth } from "../firebase-config";
+import { signInWithEmailAndPassword } from "firebase/auth";
+
 import Logo from "../assets/logo.png";
 
 const Login = () => {
@@ -10,7 +13,6 @@ const Login = () => {
         showPassword: false
     });
 
-    // TODO: add error message
     const checkboxClick = () => {
         setValues({ ...values, showPassword: !values.showPassword });
     };
@@ -24,7 +26,6 @@ const Login = () => {
         message: "",
         state: false
     });
-
     const navigate = useNavigate();
 
     const handleLogin = async (e) => {
@@ -33,9 +34,10 @@ const Login = () => {
         const password = e.target[1].value;
 
         try{
-
+            await signInWithEmailAndPassword(auth, email, password);
+            navigate("/");
         } catch (error) {
-            setLoginErr({...loginErr, state: true, message: "Invalid email and/or password" });
+            setLoginErr({...loginErr, state: true, message: "User not found" });
         }
     };
 
@@ -53,8 +55,9 @@ const Login = () => {
                         <label htmlFor="passwordToggle">Show/Hide Password</label>
                     </div>
                     <button>Sign in</button>
+                    {loginErr && <span className='errorMessage'>{loginErr.message}</span>}
                 </form>
-                <p>You don't have an account? Register</p>
+                <p>You don't have an account? <Link to="/register" className='links'>Register</Link></p>
             </div>
         </div>
     );

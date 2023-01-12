@@ -113,6 +113,13 @@ body {
     }
 }
 
+.links {
+    text-decoration: none;
+    color: $viridianGreen;
+    font-weight: 700;
+    @include hover()
+}
+
 // forms
 .formContainer {
     @include pageLayout();

@@ -1,22 +1,20 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { signOut } from "firebase/auth";
 import { auth } from "../../firebase-config";
 // import { useState } from 'react';
 
 const Navbar = () => {
-  // const [signOutMsg, setSignOutMsg] = useState({
-  //   message: "",
-  //   state: false
-  // });
+  const [signOutMsg, setSignOutMsg] = useState({
+    message: "",
+    state: false
+  });
 
   const handleSignOut = async () => {
     await signOut(auth).then(() => {
-      // navigate
-
+      // since no user is authenticated, navigate to login (see App>Protected Route)
     }).catch((error) => {
       // error
-      // setSignOutMsg({ ...signOutMsg, state: true, message: "An error occurred"});
-      console.log("An error occurred while sign user out");
+      setSignOutMsg({ ...signOutMsg, state: true, message: "An error occurred, please retry later"});
     });
   };
 
@@ -29,7 +27,7 @@ const Navbar = () => {
         <span>Username</span>
         <button onClick={handleSignOut}>Sign out</button>
       </div>
-      {/* {signOutMsg && <span className='errorMessage'>{signOutMsg.message}</span>} */}
+      {signOutMsg && <span className='errorMessage'>{signOutMsg.message}</span>}
     </div>
   );
 }

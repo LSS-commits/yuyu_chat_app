@@ -7,7 +7,7 @@ import { auth, chatDB, storage } from "../firebase-config";
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import { validateFileUpload, isValidFormat } from "../shared/Functions";
 import { doc, setDoc } from "firebase/firestore";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 
 const Register = () => {
 
@@ -156,7 +156,7 @@ const Register = () => {
           {/* form error */}
           {formErr && <span className='errorMessage'>{formErr.message}</span>}
         </form>
-        <p>Already have an account? Login</p>
+        <p>Already have an account? <Link to="/login" className='links'>Login</Link></p>
       </div>
     </div>
   );
