@@ -37,6 +37,8 @@ const Register = () => {
     const avatar = e.target.files[0];
     validateFileUpload(avatar);
 
+    //TODO: pb with photoURL = during registration, is an image stored ?
+
     if (isValidFormat === true) {
       const reader = new FileReader();
       reader.addEventListener("load", () => {

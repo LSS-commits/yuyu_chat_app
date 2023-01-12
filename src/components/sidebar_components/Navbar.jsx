@@ -1,9 +1,13 @@
 import React, { useState } from 'react';
 import { signOut } from "firebase/auth";
 import { auth } from "../../firebase-config";
-// import { useState } from 'react';
+import { useContext } from 'react';
+import { AuthContext } from '../../context/AuthContext';
 
 const Navbar = () => {
+  const { currentUser } = useContext(AuthContext);
+  console.log(currentUser.photoURL);
+
   const [signOutMsg, setSignOutMsg] = useState({
     message: "",
     state: false
@@ -18,13 +22,14 @@ const Navbar = () => {
     });
   };
 
+  //TODO: pb with photoURL = during registration, is an image stored ?
 
   return (
     <div className='navbar'>
       <span className='logo'>Yuyu Chat</span>
       <div className="user">
-        <img src="https://images.pexels.com/photos/14616881/pexels-photo-14616881.jpeg?auto=compress&cs=tinysrgb&w=300&lazy=load" alt="user avatar"/>
-        <span>Username</span>
+        <img src={currentUser.photoURL} alt="user avatar"/>
+        <span>{currentUser.displayName}</span>
         <button onClick={handleSignOut}>Sign out</button>
       </div>
       {signOutMsg && <span className='errorMessage'>{signOutMsg.message}</span>}
