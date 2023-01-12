@@ -28,21 +28,27 @@ const Register = () => {
 
 
   // check avatar format, display preview, display status msg
+  // TODO: add boolean in imgData => if img is valid, return a truthy bool and then use this boolean 
   const [imgData, setImgData] = useState(null);
   const [fileMsg, setFileMsg] = useState({
     message: "",
     state: false
   });
+
+
+
   const checkFile = (e) => {
     const avatar = e.target.files[0];
     validateFileUpload(avatar);
 
-    //TODO: pb with photoURL = during registration, is an image stored ?
+    //TODO: pb with photoURL = during registration, is an image stored or a binary file ?
+    // console.log(avatar);
 
     if (isValidFormat === true) {
       const reader = new FileReader();
       reader.addEventListener("load", () => {
         setImgData(reader.result);
+        // console.log(reader.result);
       });
       reader.readAsDataURL(avatar);
       setFileMsg({ ...fileMsg, state: false, message: "Here's your avatar!" });
@@ -68,6 +74,7 @@ const Register = () => {
     const email = e.target[1].value;
     const password = e.target[2].value;
     // get imgData (= valid avatar)
+    // TODO: if imgData is not null, store avatar in file and not reader.result
     const file = imgData ? imgData : false;
 
     // error msg if form is incomplete

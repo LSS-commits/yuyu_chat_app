@@ -15,6 +15,7 @@ function App(){
   // TODO: 404 page or navigate to login or home
 
   // protected route : if there's no user authenticated, navigate to login
+  // TODO: visitor can't access register page via url bar...
   const PrivateRoute = ({children}) => {
     if (!currentUser) {
       return <Navigate to="/login"/>;
@@ -23,10 +24,20 @@ function App(){
     return children;
   };
 
-
-  // TODO: prevent authenticated user from navigating to register and login pages ?
+  // prevent authenticated user from navigating to register and login pages
+  const PublicRouteLogin = ({children}) => {
+    if (currentUser) {
+      return <Navigate to="/"/>;
+    }
+    return children;
+  };
   
-
+  const PublicRouteRegister = ({children}) => {
+    if (currentUser) {
+      return <Navigate to="/"/>;
+    }
+    return children;
+  };
 
   return (
     <BrowserRouter>
@@ -37,8 +48,16 @@ function App(){
             <Home/>
           </PrivateRoute>
           }/>
-          <Route path="login" element={<Login/>}/>
-          <Route path="register" element={<Register/>}/>
+          <Route path="login" element={
+           <PublicRouteLogin>
+            <Login/>
+           </PublicRouteLogin>
+          }/>
+          <Route path="register" element={
+            <PublicRouteRegister>
+              <Register/>
+            </PublicRouteRegister>
+          }/>
         </Route>
       </Routes>
     </BrowserRouter>
