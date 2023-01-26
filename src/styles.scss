@@ -28,6 +28,9 @@ $babyPink: #F0C0BF;
 $mistyRose: #F7DEDE;
 $lavenderBlush: #FBEFEE;
 
+// yuyu logo blue
+$yuyuBlue: #00C2CB;
+
 // effects
 $boxShadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
 $boxShadowLight: rgba(0, 0, 0, 0.16) 0px 1px 4px;
@@ -122,19 +125,61 @@ body {
 
 // welcome page
 .welcome{
-    @include pageLayout();
+    background-color: $lavenderBlush;
+    height: 100vh;
 
     .container {
-        width: 65%;
+        position: relative;
+        margin: 0 auto;
+        width: 70%;
         height: 80%;
-        .logo{
-            height: 200px;
-            border-radius: 10px
+        .welcomeBlock{
+            width: 100%;
+            margin: 0;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            -ms-transform: translate(-50%, -50%);
+            transform: translate(-50%, -50%);
+            .title{
+                margin: 20px 0;
+            }
+            .logo{
+                margin: 20px 0;
+                height: 100px;
+                border-radius: 10px
+            }
+            .loginLink {
+                font-size: 1.3rem;
+                margin: 20px 0;
+            }
+            .welcomeBtn{
+                @include btn();
+                margin: 20px 0;
+                text-decoration: none;
+                font-size: .8rem;
+                @include hover();
+            }
+            .registerLink{
+                margin: 30px 0 10px 0;
+                font-size: .9rem;
+            }
+            
         }
-        p {
-            font-size: 18px;
-            margin-top: 10px
-        }
+        
+
+    }
+    .welcomeFooter{
+        position: relative;
+        // width: 100%;
+        background: $viridianGreen;
+        color: $lightGrey;
+        min-height: 100px;
+        padding: 20px 50px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column
     }
 }
 

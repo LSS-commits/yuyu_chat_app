@@ -2,6 +2,8 @@
 This is the code for a realtime chat application using React and Firebase. 
 
 # Overview
+- Landing page
+
 - User search bar to start a new conversation
 - Display latest conversations and latest message
 - Send images
@@ -18,6 +20,7 @@ Form validation
 
 # Also used
 - Sass CSS
+- React Icons Ionicons
 
 # Proposed improvements
 - Message timestamp (regroup messages under a particular date, yesterday, today, above message group, timestamp under message)

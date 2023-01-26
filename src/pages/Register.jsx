@@ -163,7 +163,7 @@ const Register = () => {
           {/* form error */}
           {formErr && <span className='errorMessage'>{formErr.message}</span>}
         </form>
-        <p>Already have an account? <Link to="/login" className='links'>Login</Link></p>
+        <p>Already have an account? <Link to="/login" className='links'>Sign in</Link></p>
       </div>
     </div>
   );
