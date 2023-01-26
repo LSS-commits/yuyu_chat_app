@@ -22,8 +22,6 @@ const Navbar = () => {
     });
   };
 
-  //TODO: pb with photoURL = during registration, is an image stored ?
-
   return (
     <div className='navbar'>
       <span className='logo'>Yuyu Chat</span>

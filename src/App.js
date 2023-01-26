@@ -1,3 +1,4 @@
+import Welcome from "./pages/Welcome";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
@@ -18,13 +19,23 @@ function App(){
   // TODO: visitor can't access register page via url bar...
   const PrivateRoute = ({children}) => {
     if (!currentUser) {
-      return <Navigate to="/login"/>;
+      // to welcome component
+      return <Navigate to="/welcome"/>;
+
     }
     // if a user is authenticated, return home page
     return children;
   };
 
-  // prevent authenticated user from navigating to register and login pages
+  // prevent authenticated user from navigating to welcome, register and login pages
+
+  const PublicRouteWelcome = ({children}) => {
+    if (currentUser) {
+      return <Navigate to="/"/>;
+    }
+    return children;
+  };
+
   const PublicRouteLogin = ({children}) => {
     if (currentUser) {
       return <Navigate to="/"/>;
@@ -47,6 +58,11 @@ function App(){
           <PrivateRoute>
             <Home/>
           </PrivateRoute>
+          }/>
+          <Route path="welcome" element={
+           <PublicRouteWelcome>
+            <Welcome/>
+           </PublicRouteWelcome>
           }/>
           <Route path="login" element={
            <PublicRouteLogin>

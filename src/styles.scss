@@ -120,7 +120,25 @@ body {
     @include hover()
 }
 
-// forms
+// welcome page
+.welcome{
+    @include pageLayout();
+
+    .container {
+        width: 65%;
+        height: 80%;
+        .logo{
+            height: 200px;
+            border-radius: 10px
+        }
+        p {
+            font-size: 18px;
+            margin-top: 10px
+        }
+    }
+}
+
+// forms (register, login)
 .formContainer {
     @include pageLayout();
 

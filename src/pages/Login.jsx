@@ -3,7 +3,6 @@ import { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { auth } from "../firebase-config";
 import { signInWithEmailAndPassword } from "firebase/auth";
-
 import Logo from "../assets/logo.png";
 
 const Login = () => {

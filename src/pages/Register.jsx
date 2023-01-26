@@ -28,32 +28,31 @@ const Register = () => {
 
 
   // check avatar format, display preview, display status msg
-  // TODO: add boolean in imgData => if img is valid, return a truthy bool and then use this boolean 
-  const [imgData, setImgData] = useState(null);
+  const [imgPreview, setImgPreview] = useState(null);
+  const [imgData, setImgData]= useState(null);
   const [fileMsg, setFileMsg] = useState({
     message: "",
     state: false
   });
 
-
-
   const checkFile = (e) => {
     const avatar = e.target.files[0];
     validateFileUpload(avatar);
 
-    //TODO: pb with photoURL = during registration, is an image stored or a binary file ?
-    // console.log(avatar);
-
     if (isValidFormat === true) {
       const reader = new FileReader();
       reader.addEventListener("load", () => {
-        setImgData(reader.result);
-        // console.log(reader.result);
+        setImgPreview(reader.result);
       });
       reader.readAsDataURL(avatar);
       setFileMsg({ ...fileMsg, state: false, message: "Here's your avatar!" });
+
+      // since format is valid, get file for db storage
+      setImgData(avatar);
     } else {
       // clear Filelist to prevent upload of invalid file
+      setImgPreview(null);
+      // no file to send to db storage
       setImgData(null);
       setFileMsg({ ...fileMsg, state: true, message: "Avatar should be jpeg or png" });
     }
@@ -74,7 +73,6 @@ const Register = () => {
     const email = e.target[1].value;
     const password = e.target[2].value;
     // get imgData (= valid avatar)
-    // TODO: if imgData is not null, store avatar in file and not reader.result
     const file = imgData ? imgData : false;
 
     // error msg if form is incomplete
@@ -92,7 +90,7 @@ const Register = () => {
       try {
         // register user with email and pw
         const response = await createUserWithEmailAndPassword(auth, email, password);
-        // create unique avatar name
+        // create unique avatar file name
         const date = new Date().getTime();
         const storageRef = ref(storage, `${displayName.replace(/\s+/g, "")}-avatar-${date}`);
 
@@ -158,7 +156,7 @@ const Register = () => {
             <span>Add an avatar</span>
           </label>
           {/* avatar preview if format is valid*/}
-          {imgData && <img src={imgData} alt="test avatar" className="avatarPreview" />}
+          {imgPreview && <img src={imgPreview} alt="test avatar" className="avatarPreview" />}
           {/* error if format is invalid */}
           {fileMsg && <span className='errorMessage'>{fileMsg.message}</span>}
           <button>Sign up</button>
