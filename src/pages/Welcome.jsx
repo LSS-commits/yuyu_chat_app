@@ -18,16 +18,9 @@ const Welcome = () => {
           <p className='registerLink'>You don't have an account?</p>
           <Link to="/register" className='links'>Register</Link>
         </div>
-        </div>
+      </div>
       {/* footer */}
       <footer className="welcomeFooter">
-        {/* wave animation */}
-        <div className="waves">
-          <div className="wave" id="wave1"></div>
-          <div className="wave" id="wave2"></div>
-          <div className="wave" id="wave3"></div>
-          <div className="wave" id="wave4"></div>
-        </div>
         <span className='description'>Yuyu is a cloud-based web messaging app with a focus on security and speed.</span>
         <ul className="social-icon">
           <li className="social-icon__item"><span className="social-icon__link">

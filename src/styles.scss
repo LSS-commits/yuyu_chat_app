@@ -9,9 +9,13 @@ $lightGrey: #E6E6E6;
 $darkGrey: #3D3D3D;
 $lightBlack: #262626;
 $errorCol: #FF4444;
-// outer app
+// yuyu logo blue
+$yuyuBlue: #00C2CB;
+
+// OUTER APP
 $viridianGreen: #13A5AD;
-// inner app
+
+// INNER APP
 // blue green
 // darkest
 $darkCyan: #398D93;
@@ -28,15 +32,12 @@ $babyPink: #F0C0BF;
 $mistyRose: #F7DEDE;
 $lavenderBlush: #FBEFEE;
 
-// yuyu logo blue
-$yuyuBlue: #00C2CB;
 
-// effects
+// EFFECTS
 $boxShadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
 $boxShadowLight: rgba(0, 0, 0, 0.16) 0px 1px 4px;
 
-// mixins
-
+// MIXINS
 // responsive styles
 @mixin mobile{
     @media screen and (max-width: 480px){
@@ -75,13 +76,13 @@ $boxShadowLight: rgba(0, 0, 0, 0.16) 0px 1px 4px;
     border: none;
     border-radius: 10px;
     box-shadow: $boxShadowLight;
-    cursor: pointer;
+    cursor: pointer
 }
 
 @mixin hover(){
     transition: .2s all ease-in-out;
     &:hover {
-        opacity: 0.7;
+        opacity: 0.7
     }
 }
 
@@ -97,6 +98,13 @@ $boxShadowLight: rgba(0, 0, 0, 0.16) 0px 1px 4px;
 @mixin bar() {
     height: 50px;
     padding: 10px
+}
+
+// GENERAL
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box
 }
 
 html,
@@ -123,7 +131,7 @@ body {
     @include hover()
 }
 
-// welcome page
+// WELCOME PAGE
 .welcome{
     background-color: $lavenderBlush;
     height: 100vh;
@@ -141,49 +149,100 @@ body {
             left: 50%;
             -ms-transform: translate(-50%, -50%);
             transform: translate(-50%, -50%);
-            .title{
-                margin: 20px 0;
+            .title, .logo, .loginLink, .welcomeBtn{
+                margin: 20px 0
             }
+            
             .logo{
-                margin: 20px 0;
                 height: 100px;
                 border-radius: 10px
             }
             .loginLink {
-                font-size: 1.3rem;
-                margin: 20px 0;
+                font-size: 1.3rem
             }
             .welcomeBtn{
                 @include btn();
-                margin: 20px 0;
                 text-decoration: none;
                 font-size: .8rem;
-                @include hover();
+                @include hover()
             }
             .registerLink{
                 margin: 30px 0 10px 0;
-                font-size: .9rem;
+                font-size: .9rem
             }
-            
         }
-        
-
     }
     .welcomeFooter{
+        @include tablet{
+            font-size: .9rem
+        }
         position: relative;
         // width: 100%;
         background: $viridianGreen;
         color: $lightGrey;
         min-height: 100px;
         padding: 20px 50px;
-        display: flex;
+        margin-top: 30px;
+        @include elementLayout();
         justify-content: center;
-        align-items: center;
-        flex-direction: column
+        flex-direction: column;
+        p, span, .menu__link{
+            font-weight: 300
+        }
+        .social-icon, .menu {
+            position: relative;
+            @include elementLayout();
+            justify-content: center;
+            margin: 10px 0;
+            flex-wrap: wrap
+        }
+        .social-icon__item, .menu__item {
+            list-style: none
+        }
+        .social-icon__link, .menu__link{
+            margin: 0 10px
+        }
+        .social-icon__link {
+            font-size: 2rem;
+            color: $white;
+            display: inline-block;
+            transition: 0.5s;
+            cursor: pointer
+        }
+        .social-icon__link:hover {
+            transform: translateY(-10px)
+        }
+        .menu__link {
+            font-size: 1.2rem;
+            display: inline-block;
+            text-decoration: none;
+            transition: 0.5s;
+            opacity: 0.75;
+            cursor: pointer;
+            @include tablet{
+                opacity: 1;
+                font-size: .9rem
+            }
+        }
+        .menu__link:hover {
+            opacity: 1
+        }
+        p {
+            color: $white;
+            margin: 15px 0 10px 0;
+            text-align: center
+        }
+        span {
+            text-align: center;
+            margin: 15px 0 20px 0;
+            @include tablet{
+                display: none
+            }
+        }
     }
 }
 
-// forms (register, login)
+// FORMS (REGISTER, LOGIN)
 .formContainer {
     @include pageLayout();
 
@@ -301,10 +360,8 @@ body {
             button {
                 @include btn();
                 @include hover()
-            }
-            
+            } 
         }
-
         p {
             font-size: 12px;
             margin-top: 10px
@@ -312,7 +369,7 @@ body {
     }
 }
 
-// home page
+// HOME PAGE
 .home {
     @include pageLayout();
 
@@ -376,7 +433,7 @@ body {
                             bottom: 10px;
                             left: 10px;
                             background-color: $babyPink;
-                            color: $darkGrey;
+                            color: $darkGrey
                         }
                     }
                 }
