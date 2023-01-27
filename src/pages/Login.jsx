@@ -34,7 +34,7 @@ const Login = () => {
 
         try{
             await signInWithEmailAndPassword(auth, email, password);
-            navigate("/");
+            navigate("/chatboard");
         } catch (error) {
             setLoginErr({...loginErr, state: true, message: "User not found" });
         }
@@ -54,7 +54,7 @@ const Login = () => {
                         <label htmlFor="passwordToggle">Show/Hide Password</label>
                     </div>
                     <button>Sign in</button>
-                    {loginErr && <span className='errorMessage'>{loginErr.message}</span>}
+                    {loginErr.state === true && <span className='errorMessage'>{loginErr.message}</span>}
                 </form>
                 <p>You don't have an account? <Link to="/register" className='links'>Register</Link></p>
             </div>

@@ -6,7 +6,6 @@ import { AuthContext } from '../../context/AuthContext';
 
 const Navbar = () => {
   const { currentUser } = useContext(AuthContext);
-  console.log(currentUser.photoURL);
 
   const [signOutMsg, setSignOutMsg] = useState({
     message: "",
@@ -15,7 +14,7 @@ const Navbar = () => {
 
   const handleSignOut = async () => {
     await signOut(auth).then(() => {
-      // since no user is authenticated, navigate to login (see App>Protected Route)
+      // since no user is authenticated, navigate to public route (in App)
     }).catch((error) => {
       // error
       setSignOutMsg({ ...signOutMsg, state: true, message: "An error occurred, please retry later"});
@@ -30,7 +29,7 @@ const Navbar = () => {
         <span>{currentUser.displayName}</span>
         <button onClick={handleSignOut}>Sign out</button>
       </div>
-      {signOutMsg && <span className='errorMessage'>{signOutMsg.message}</span>}
+      {signOutMsg.state === true && <span className="errorMessage">{signOutMsg.message}</span>}
     </div>
   );
 }

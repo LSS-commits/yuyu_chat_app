@@ -3,9 +3,9 @@ import Sidebar from "../components/Sidebar";
 import Chatbox from "../components/Chatbox";
 
 
-const Home = () => {
+const Chatboard = () => {
   return (
-    <div className='home'>
+    <div className='chatboard'>
       <div className="container">
         <Sidebar/>
         <Chatbox/>
@@ -14,4 +14,4 @@ const Home = () => {
   );
 }
 
-export default Home;
+export default Chatboard;

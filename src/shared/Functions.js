@@ -19,9 +19,8 @@ const validateFileUpload = (file) => {
     }
 };
 
-
 export {
     supportedFormat,
     isValidFormat,
-    validateFileUpload
+    validateFileUpload,
 };

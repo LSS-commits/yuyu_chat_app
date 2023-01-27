@@ -115,8 +115,8 @@ const Register = () => {
               // create empty user's chats collection for new user
               await setDoc(doc(chatDB, "userChats", response.user.uid), {});
 
-              // navigate to logged app (home)
-              navigate("/");
+              // navigate to logged app
+              navigate("/chatboard");
               
             } catch (error) {
               console.log(error);
@@ -158,10 +158,10 @@ const Register = () => {
           {/* avatar preview if format is valid*/}
           {imgPreview && <img src={imgPreview} alt="test avatar" className="avatarPreview" />}
           {/* error if format is invalid */}
-          {fileMsg && <span className='errorMessage'>{fileMsg.message}</span>}
+          {fileMsg.state === true && <span className='errorMessage'>{fileMsg.message}</span>}
           <button>Sign up</button>
           {/* form error */}
-          {formErr && <span className='errorMessage'>{formErr.message}</span>}
+          {formErr.state === true && <span className='errorMessage'>{formErr.message}</span>}
         </form>
         <p>Already have an account? <Link to="/login" className='links'>Sign in</Link></p>
       </div>

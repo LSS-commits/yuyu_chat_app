@@ -8,7 +8,6 @@ const Welcome = () => {
   return (
     <div className='welcome'>
       <div className="container">
-        {/* card > yuyu logo > title > links to login or register */}
         <div className="welcomeBlock">
           <img className="logo" src={Logo} alt="yuyu app logo" />
           <h1 className="title">Yuyu is the new chill.</h1>
