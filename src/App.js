@@ -13,10 +13,9 @@ function App(){
   // TODO: remove test response
   console.log(currentUser);
 
-  // TODO: 404 page or navigate to login or home
+  // wrong address in url => to welcome
 
-  // protected route : if there's no user authenticated, navigate to login
-  // TODO: visitor can't access register page via url bar...
+  // protected route : if there's no user authenticated, navigate to welcome
   const PrivateRoute = ({children}) => {
     if (!currentUser) {
       // to welcome component
@@ -28,7 +27,6 @@ function App(){
   };
 
   // prevent authenticated user from navigating to welcome, register and login pages
-
   const PublicRouteWelcome = ({children}) => {
     if (currentUser) {
       return <Navigate to="/"/>;
@@ -53,7 +51,8 @@ function App(){
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/">
+        <Route path="*" element={<Welcome />}/>
+        <Route exact path="/">
           <Route index element={
           <PrivateRoute>
             <Home/>
