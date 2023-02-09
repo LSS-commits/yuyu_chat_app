@@ -10,8 +10,7 @@ import "./styles.scss";
 function App(){
   // get user from AuthContext
   const {currentUser} = useContext(AuthContext);
-  // TODO: remove test response
-  console.log(currentUser);
+  // console.log(currentUser);
 
 
   // const location = useLocation();

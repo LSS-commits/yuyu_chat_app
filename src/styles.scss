@@ -8,7 +8,7 @@ $whiteSmoke: #F5F5F5;
 $lightGrey: #E6E6E6;
 $darkGrey: #3D3D3D;
 $lightBlack: #262626;
-$errorCol: #FF4444;
+$errorCol: #CC0000;
 // yuyu logo blue
 $yuyuBlue: #00C2CB;
 
@@ -363,7 +363,8 @@ body {
     }
 }
 
-// CHATBOARD PAGE
+// CHATBOARD PAGE 
+// TODO: responsive style = fullscreen + toggle sidebar and chatbox
 .chatboard {
     @include pageLayout();
 
@@ -418,9 +419,8 @@ body {
                     // log out btn
                     button {
                         @include btn($powderBlue, $darkGrey);
-                        font-size: 10px;
                         @include hover();
-
+                        @include elementLayout();
                         // put logout btn at the bottom of the box on smaller screens
                         @include tablet {
                             position: absolute;
@@ -428,6 +428,10 @@ body {
                             left: 10px;
                             background-color: $babyPink;
                             color: $darkGrey
+                        }
+                        svg {
+                            font-size: 18px;
+                            stroke-width: 30;
                         }
                     }
                 }
@@ -451,6 +455,10 @@ body {
                             opacity: .7
                         }
                     }
+                }
+                .searchError{
+                    color: $lightBlack;
+                    padding: 10px
                 }
             }
             .userChat {

@@ -75,6 +75,7 @@ const Register = () => {
     // get imgData (= valid avatar)
     const file = imgData ? imgData : false;
 
+    // FORM VALIDATION
     // error msg if form is incomplete
     if (!displayName || !email || !password || !file) {
       setFormErr({ ...formErr, state: true, message: "Form is incomplete" });
@@ -119,7 +120,6 @@ const Register = () => {
               navigate("/chatboard");
               
             } catch (error) {
-              console.log(error);
               // Firestore error (check rules in FB console and refresh)
               setFormErr({ ...formErr, state: true, message: "Something went wrong on our side, please try again later"});
             }
@@ -131,9 +131,8 @@ const Register = () => {
         const errMsg = e.code;
         let formattedMsg = errMsg.replace("auth/", '').replaceAll("-", ' ');
         setFormErr({ ...formErr, state: true, message: formattedMsg });
-      } // end user creation with file upload
-
-    } // end form validation (if)
+      }; // end user creation with file upload
+    }; // END FORM VALIDATION
 
   }; // end handle registration
 

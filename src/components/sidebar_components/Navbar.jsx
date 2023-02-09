@@ -3,6 +3,8 @@ import { signOut } from "firebase/auth";
 import { auth } from "../../firebase-config";
 import { useContext } from 'react';
 import { AuthContext } from '../../context/AuthContext';
+import {IoPower} from "react-icons/io5";
+
 
 const Navbar = () => {
   const { currentUser } = useContext(AuthContext);
@@ -27,7 +29,9 @@ const Navbar = () => {
       <div className="user">
         <img src={currentUser.photoURL} alt="user avatar"/>
         <span>{currentUser.displayName}</span>
-        <button onClick={handleSignOut}>Sign out</button>
+        <button onClick={handleSignOut}>
+          <IoPower></IoPower>
+        </button>
       </div>
       {signOutMsg.state === true && <span className="errorMessage">{signOutMsg.message}</span>}
     </div>
