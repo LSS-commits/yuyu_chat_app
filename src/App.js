@@ -18,7 +18,7 @@ function App(){
   // console.log("current pathname:" + location.pathname);
 
   // protected route : if there's no user authenticated, navigate to welcome
-  // TODO: PB if login/register page is refreshed, redirection to welcome...
+  // TODO: PB to fix = if login/register page is refreshed, redirection to welcome...
   const PrivateRoute = ({children}) => {
     if (!currentUser) {
       // to welcome component 

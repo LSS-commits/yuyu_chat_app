@@ -13,6 +13,7 @@ This is the code for a realtime chat application using React and Firebase.
 
 Added
 - Improved UI
+- Protected routes and redirection
 
 Form validation
 - Custom password toggle
