@@ -25,7 +25,7 @@ const Navbar = () => {
 
   return (
     <div className='navbar'>
-      <span className='logo'>Yuyu Chat</span>
+      <span className='logo'>Yuyu</span>
       <div className="user">
         <img src={currentUser.photoURL} alt="user avatar"/>
         <span>{currentUser.displayName}</span>

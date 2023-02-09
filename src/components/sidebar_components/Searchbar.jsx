@@ -16,7 +16,7 @@ const Searchbar = () => {
     state: false
   });
 
-  // after click on enter, search the username that was typed using Firebase query
+  // after enter (key), search the username that was typed using Firebase query
   const handleSearch = async () => {
     // create a query against the collection
     const userQuery = query(collection(chatDB, "users"), where("displayName", "==", userSearched));
