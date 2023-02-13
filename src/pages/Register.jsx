@@ -69,6 +69,7 @@ const Register = () => {
 
     e.preventDefault();
 
+    // TODO: check that username doesn't exist in db (check usernames collection)
     const displayName = e.target[0].value;
     const email = e.target[1].value;
     const password = e.target[2].value;
@@ -116,6 +117,8 @@ const Register = () => {
               // create empty user's chats collection for new user
               await setDoc(doc(chatDB, "userChats", response.user.uid), {});
 
+              // TODO: add username to the usernames collection
+              
               // navigate to logged app
               navigate("/chatboard");
               
