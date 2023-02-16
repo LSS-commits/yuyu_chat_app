@@ -9,8 +9,6 @@ const Chats = () => {
   const [chats, setChats] = useState([]);
   const {currentUser} = useContext(AuthContext);
 
-  
-
   useEffect(() => {
     // as the value of currentUser.uid in empty at the beginning, wrap the snapshot method in a function
     const getChats = () => {

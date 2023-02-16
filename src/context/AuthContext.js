@@ -1,8 +1,8 @@
 import { onAuthStateChanged } from "firebase/auth";
 import { createContext, useEffect, useState } from "react";
 import { auth } from "../firebase-config";
-// to share user data to the tree of components
 
+// to share user data to the tree of components
 export const AuthContext = createContext();
 
 // create authentication provider
