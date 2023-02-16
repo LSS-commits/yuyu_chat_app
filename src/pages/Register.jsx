@@ -39,6 +39,7 @@ const Register = () => {
     const avatar = e.target.files[0];
     validateFileUpload(avatar);
 
+    // image preview
     if (isValidFormat === true) {
       const reader = new FileReader();
       reader.addEventListener("load", () => {

@@ -1,4 +1,4 @@
-// check MIME type for avatar img in registration form
+// check MIME type for img
 const supportedFormat = ['image/png', 'image/jpeg'];
 let isValidFormat = false;
 const validateFileUpload = (file) => {
@@ -18,6 +18,8 @@ const validateFileUpload = (file) => {
         return isValidFormat ;
     }
 };
+
+// TODO: create a validation function for files or remove file attachment 
 
 export {
     supportedFormat,

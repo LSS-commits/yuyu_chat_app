@@ -502,6 +502,9 @@ body {
                 justify-content: space-between;
                 color: $darkGrey;
 
+                span {
+                    opacity: .6
+                }
                 .chatIcons {
                     display: flex;
                     gap: 10px;
