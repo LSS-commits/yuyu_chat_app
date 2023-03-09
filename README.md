@@ -1,7 +1,7 @@
 # Yuyu Chat App
 This is the code for a realtime chat application using React and Firebase. 
 
-![Preview app](https://github.com/LSS-commits/yuyu_chat_app/blob/main/app_preview.png?raw=true)
+![Preview app](https://github.com/LSS-commits/yuyu_chat_app/blob/main/app_preview.PNG?raw=true)
 
 # Overview
 - Landing page
