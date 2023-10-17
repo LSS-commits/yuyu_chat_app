@@ -188,7 +188,8 @@ body {
             @include elementLayout();
             justify-content: center;
             margin: 10px 0;
-            flex-wrap: wrap
+            flex-wrap: wrap;
+            padding-left: 0
         }
         .social-icon__item, .menu__item {
             list-style: none
@@ -197,7 +198,7 @@ body {
             margin: 0 10px
         }
         .social-icon__link {
-            font-size: 2rem;
+            font-size: 1.5rem;
             color: $white;
             display: inline-block;
             transition: 0.5s;
@@ -207,7 +208,7 @@ body {
             transform: translateY(-10px)
         }
         .menu__link {
-            font-size: 1.2rem;
+            font-size: 1rem;
             display: inline-block;
             text-decoration: none;
             transition: 0.5s;
